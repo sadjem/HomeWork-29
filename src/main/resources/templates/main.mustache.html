@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Hello Spring</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div>Список юзеров</div>
+<form method="post" action="filter">
+    <input type="text" name="filter"/>
+    <button type="submit">Найти</button>
+</form>
+{{#users}}
+<div>
+    <b>{{id}}</b>
+    <span>{{firstName}}</span>
+    <i>{{secondName}}</i>
+</div>
+{{/users}}
+</body>
+</html>
