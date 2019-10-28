@@ -16,17 +16,20 @@
 
 <div>
     <table align="center", border="1">
+        <tr>
         <td><b>id article</b></td>
         <td><b>title article</b></td>
         <td><b>text article</b></td>
+        </tr>
+
+{{#articles}}
+    <tr>
+        <td><b>{{id}}</b></td>
+        <td><b>{{title}}</b></td>
+        <td><b>{{text}}</b></td>
+    </tr>
+{{/articles}}
     </table>
 </div>
-{{#articles}}
-<div>
-    <b>{{id}}</b>
-    <span>{{title}}</span>
-    <i>{{text}}</i>
-</div>
-{{/articles}}
 </body>
 </html>
