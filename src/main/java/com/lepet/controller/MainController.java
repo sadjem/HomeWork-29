@@ -1,7 +1,7 @@
 package com.lepet.controller;
 
-import com.lepet.model.User;
-import com.lepet.repos.UserRepo;
+import com.lepet.model.Article;
+import com.lepet.repos.ArticleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,45 +15,31 @@ import java.util.Map;
 public class MainController {
 
     @Autowired
-    private UserRepo userRepo;
+    private ArticleRepo articleRepo;
 
-    @GetMapping("/hello")
-    public String hello (@RequestParam(name = "name", required = false, defaultValue = "World") String name,
-                         Map<String, Object> model) {
-        model.put("name", name);
-        return "hello";
-    }
-    @GetMapping("/add")
-    public String add (Map<String, Object> model){
-        Iterable<User>users = userRepo.findAll();
-        model.put("users", users);
-        return "add";
+    @PostMapping
+    public String addArticle(@RequestParam String title, @RequestParam String text, Map<String,Object> model){
+        Article article = new Article(title, text);
+        articleRepo.save(article);
+        Iterable<Article> articles = articleRepo.findAll();
+        model.put("articles", articles);
+        return "main";
     }
 
     @GetMapping
-    public String main (Map<String, Object> model){
-        Iterable<User> users = userRepo.findAll();
-        model.put("users", users);
+    public String getAll (Map<String, Object> model) {
+        Iterable<Article> articles = articleRepo.findAll();
+        model.put("articles", articles);
         return "main";
     }
 
-    @GetMapping("/add")
-    public String add (@RequestParam String firstName, @RequestParam String secondName, Map<String, Object> model){
-        User user = new User(firstName,secondName);
-        userRepo.save(user);
-        Iterable<User> users = userRepo.findAll();
-        model.put("users", users);
-        return "add";
+    @GetMapping(value = "/article")
+    public String add (@RequestParam (value = "title") String title,
+                       @RequestParam (value = "text") String text,
+                       Map<String, Object> model){
+        Iterable<Article> articles = articleRepo.findByTitleAndText(title,text);
+        model.put("articles", articles);
+        return "search success";
     }
-    @PostMapping("filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model){
-        Iterable<User> users;
-        if(filter != null && !filter.isEmpty()){
-            users = userRepo.findBySecondName(filter);
-        }else {
-            users = userRepo.findAll();
-        }
-        model.put("users", users);
-        return "main";
-    }
+
 }

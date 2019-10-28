@@ -2,20 +2,31 @@
 <html>
 <head>
     <title>Hello Spring</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="css/mainPage.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div>Список юзеров</div>
-<form method="post" action="filter">
-    <input type="text" name="filter"/>
-    <button type="submit">Найти</button>
-</form>
-{{#users}}
+
+<div align="center">
+    <form method="post">
+        <input type="text" name="title", placeholder="Введите название статьи">
+        <input type="text" name="text", placeholder="Введите текст статьи">
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+
+<div>
+    <table align="center", border="1">
+        <td><b>id article</b></td>
+        <td><b>title article</b></td>
+        <td><b>text article</b></td>
+    </table>
+</div>
+{{#articles}}
 <div>
     <b>{{id}}</b>
-    <span>{{firstName}}</span>
-    <i>{{secondName}}</i>
+    <span>{{title}}</span>
+    <i>{{text}}</i>
 </div>
-{{/users}}
+{{/articles}}
 </body>
 </html>
